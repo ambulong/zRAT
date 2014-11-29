@@ -103,6 +103,7 @@ class zHost {
 	}
 	
 	public function updateLastTime($id) {
+		global $table_prefix;
 		$last_time = get_time();
 		if (! $this->isExistID ( $id )) {
 			return FALSE;
@@ -122,6 +123,7 @@ class zHost {
 	}
 	
 	public function updateKey($key, $id) {
+		global $table_prefix;
 		$key = trim($key);
 		if (! $this->isExistID ( $id )) {
 			return FALSE;

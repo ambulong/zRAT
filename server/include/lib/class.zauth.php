@@ -12,14 +12,19 @@ class zAuth {
 	}
 	
 	public function init(){
+		$sid = $this->sid;
 		$host_obj = new zHost();
-		if(!$this->validateSID($this->sid) || !$this->validateKey($this->key)){
+		if(!$this->validateSID($sid) || !$this->validateKey($this->key)){
 			resp(0);
 		}elseif($host_obj->isExistSID($sid)){
 			$id = $host_obj->getID($sid);
-			$host_obj->updateLastTime($id);
-			$host_obj->updateKey($this->key, $id);
-			resp(1);
+			if($host_obj->isOnline($id)){
+				resp(0);
+			}else{
+				$host_obj->updateLastTime($id);
+				$host_obj->updateKey($this->key, $id);
+				resp(1);
+			}
 		}else{
 			$pub_ip =  get_ip();
 			$data = isset($_POST['data'])?$_POST['data']:"";
