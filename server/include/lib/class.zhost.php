@@ -102,6 +102,44 @@ class zHost {
 		}
 	}
 	
+	public function updateLastTime($id) {
+		$last_time = get_time();
+		if (! $this->isExistID ( $id )) {
+			return FALSE;
+		}
+		try {
+			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}hosts SET `last_time`= :time WHERE `id` = :id" );
+			$sth->bindParam ( ':time', $last_time );
+			$sth->bindParam ( ':id', $id );
+			$sth->execute ();
+			if (! ($sth->rowCount () > 0))
+				return FALSE;
+			else
+				return TRUE;
+		} catch ( PDOExecption $e ) {
+			echo "<br>Error: " . $e->getMessage ();
+		}
+	}
+	
+	public function updateKey($key, $id) {
+		$key = trim($key);
+		if (! $this->isExistID ( $id )) {
+			return FALSE;
+		}
+		try {
+			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}hosts SET `key`= :key WHERE `id` = :id" );
+			$sth->bindParam ( ':key', $key );
+			$sth->bindParam ( ':id', $id );
+			$sth->execute ();
+			if (! ($sth->rowCount () > 0))
+				return FALSE;
+			else
+				return TRUE;
+		} catch ( PDOExecption $e ) {
+			echo "<br>Error: " . $e->getMessage ();
+		}
+	}
+	
 	public function getKey($id) {
 		global $table_prefix;
 		$id = intval ( $id );
@@ -165,8 +203,8 @@ class zHost {
 			$sth->execute ();
 			$result = $sth->fetch ( PDO::FETCH_ASSOC );
 			$last_time = $result["last_time"];
-			$timediff = (getTimestamp() - $last_time);
-			if($timediff > (60*4))	//4分钟
+			$timediff = (getTimestamp() - strtotime($last_time))%86400/60;
+			if($timediff > 4)	//4分钟
 				return FALSE;
 			else
 				return TRUE;

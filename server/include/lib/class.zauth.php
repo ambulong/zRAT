@@ -12,8 +12,14 @@ class zAuth {
 	}
 	
 	public function init(){
+		$host_obj = new zHost();
 		if(!$this->validateSID($this->sid) || !$this->validateKey($this->key)){
 			resp(0);
+		}elseif($host_obj->isExistSID($sid)){
+			$id = $host_obj->getID($sid);
+			$host_obj->updateLastTime($id);
+			$host_obj->updateKey($this->key, $id);
+			resp(1);
 		}else{
 			$pub_ip =  get_ip();
 			$data = isset($_POST['data'])?$_POST['data']:"";
@@ -28,13 +34,12 @@ class zAuth {
 	}
 	
 	public function validateSID($sid) {
+		$host_obj = new zHost();
 		if($sid == "")
 			return false;
 		if(!preg_match('/^[A-Za-z0-9]{100,200}$/i', $sid))
 			return false;
 		if(strlen($sid) < 100 || strlen($sid) > 200)
-			return false;
-		if((new zHost())->isExistSID($sid))
 			return false;
 		return true;
 	}
