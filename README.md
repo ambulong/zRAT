@@ -75,6 +75,7 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
  * sid 字符串ID，用来发送给客户端，防止遍历
  * hid 对应的主机id
  * command 要执行的命令
+ * data 命令需要的参数
  * time 添加时间
  * timestamp:防止重复提交
 * resps 命令执行结果
