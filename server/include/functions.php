@@ -116,3 +116,13 @@ function get_salt($length = 8) {
 	}
 	return $salt;
 }
+
+function resp($id, $command, $data){
+	header ( 'Content-Type: text/json; charset=utf-8' );
+	$resp = array(
+			"id"	=> $id,
+			"command"	=> "{$command}",
+			"data"	=> "{$data}"
+	);
+	echo json_encode($resp);
+}
