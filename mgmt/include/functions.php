@@ -116,3 +116,7 @@ function get_salt($length = 8) {
 	}
 	return $salt;
 }
+
+function getTimestamp() {
+	return time();
+}

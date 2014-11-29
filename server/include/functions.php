@@ -117,12 +117,25 @@ function get_salt($length = 8) {
 	return $salt;
 }
 
-function resp($id, $command, $data){
+function resp($status, $id = "", $command = "", $data = ""){
 	header ( 'Content-Type: text/json; charset=utf-8' );
 	$resp = array(
+			"status" => $status,
 			"id"	=> $id,
 			"command"	=> "{$command}",
 			"data"	=> "{$data}"
 	);
 	echo json_encode($resp);
+}
+
+function getTimestamp() {
+	return time();
+}
+
+function encryptAES($data, $key) {
+	
+}
+
+function decryptAES($data, $key) {
+	return $data;
 }

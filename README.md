@@ -69,6 +69,7 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
  * os 主机系统
  * label 备注
  * time 添加时间
+ * last_time 最后一次请求时间
  * mgmt_time 
 * commands 命令信息
  * id
