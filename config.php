@@ -3,17 +3,17 @@
 /**
  * The name of the MySQL database
  */
-define ( 'Z_DB_NAME', '' );
+define ( 'Z_DB_NAME', 'zrat' );
 
 /**
  * MySQL database username
  */
-define ( 'Z_DB_USER', '' );
+define ( 'Z_DB_USER', 'zrat' );
 
 /**
  * MySQL database password
  */
-define ( 'Z_DB_PASSWORD', '' );
+define ( 'Z_DB_PASSWORD', 'TemKGtfDFKB7XqT9' );
 
 /**
  * MySQL hostname
