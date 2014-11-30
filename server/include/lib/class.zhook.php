@@ -14,7 +14,9 @@ class zHook {
 		$host_obj = new zHost();
 		if($host_obj->isExistSID($sid)){
 			$id = $host_obj->getID($sid);
-			$data = (new zCommand())->getCommand($id);
+			$command_obj = new zCommand();
+			$data = $command_obj->getCommand($id);
+			$command_obj->updateCommand(1, $id);
 			if(is_json($data['data']))
 				$data['data'] = json_decode($data['data'], true);
 			if(isset($data['id']))
