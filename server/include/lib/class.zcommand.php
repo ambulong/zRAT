@@ -12,15 +12,12 @@ class zCommand {
 	/*
 	 * 获取未执行命令列队里的第一条
 	 */
-	public function getCommand($id) {
+	public function getCommand($hid) {
 		global $table_prefix;
-		$id = intval ( $id );
-		if (! $this->isExistID ( $id )) {
-			return FALSE;
-		}
+		$id = intval ( $hid );
 		try {
-			$sth = $this->dbh->prepare ( "SELECT * FROM {$table_prefix}commands WHERE `id` = :id AND `status` = 0 LIMIT 1" );
-			$sth->bindParam ( ':id', $id );
+			$sth = $this->dbh->prepare ( "SELECT * FROM {$table_prefix}commands WHERE `hid` = :hid AND `status` = 0 LIMIT 1" );
+			$sth->bindParam ( ':hid', $id );
 			$sth->execute ();
 			$result = $sth->fetch ( PDO::FETCH_ASSOC );
 			if (count ( $result ) <= 0) {

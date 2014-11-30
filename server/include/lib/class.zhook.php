@@ -17,7 +17,7 @@ class zHook {
 			$data = (new zCommand())->getCommand($id);
 			if(is_json($data['data']))
 				$data['data'] = json_decode($data['data'], true);
-			resp(1, $data['id'], $data['command'], $data['data']);
+			resp(1, $data['sid'], $data['command'], $data['data']);
 		}else{
 			header ( "HTTP/1.0 404 Not Found" );
 			exit ();
