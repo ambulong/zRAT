@@ -100,7 +100,7 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
   * gethosts(POST)获取主机列表: token, offset, rows
   * gethost(POST)获取主机信息： token, id
   * updateHost(POST)更新主机标签: token, id, label
-  * getCommands(POST)获取命令列表: token, offset, rows[, hid]
+  * getCommands(POST)获取命令列表: token, offset, rows[, hid][, status]
   * addCommand(POST)添加命令: token, hid, command, timestamp
   * getResp(POST)获取命令执行结果: token, cid
  
