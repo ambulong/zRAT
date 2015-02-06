@@ -60,6 +60,11 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
  * username
  * password
  * mgmt_time
+* users_token 存放token
+ * id
+ * username
+ * token
+ * expired_time token最后更新时间
 * hosts 主机信息
  * id
  * sid 100位字符串ID
