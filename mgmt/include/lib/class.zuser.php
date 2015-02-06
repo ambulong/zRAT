@@ -97,8 +97,10 @@ class zUser {
 			$sth->execute ();
 			if (! ($sth->rowCount () > 0))
 				return FALSE;
-			else
+			else {
+				$this->delUserToken($username);
 				return TRUE;
+			}
 		} catch ( PDOExecption $e ) {
 			echo "<br>Error: " . $e->getMessage ();
 		}
@@ -247,6 +249,30 @@ class zUser {
 		global $table_prefix;
 		try {
 			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 780 " );
+			$sth->execute ();
+			$row = $sth->rowCount ();
+			if ($row > 0) {
+				return $row;
+			} else {
+				return FALSE;
+			}
+		} catch ( PDOExecption $e ) {
+			echo "<br>Error: " . $e->getMessage ();
+		}
+	}
+	
+	/**
+	 * 清除用户token
+	 * 
+	 * @param String $username 用户名
+	 *
+	 * @return string boolean
+	 */
+	private function delUserToken($username) {
+		global $table_prefix;
+		try {
+			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE `username` = :username " );
+			$sth->bindParam ( ':username', $username);
 			$sth->execute ();
 			$row = $sth->rowCount ();
 			if ($row > 0) {
