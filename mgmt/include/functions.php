@@ -120,3 +120,12 @@ function get_salt($length = 8) {
 function getTimestamp() {
 	return time();
 }
+
+function resp($status, $data = array()){
+	header ( 'Content-Type: text/json; charset=utf-8' );
+	$resp = array(
+			"status" => $status,
+			"data"	=> $data
+	);
+	echo json_encode($resp);
+}
