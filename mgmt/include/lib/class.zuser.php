@@ -160,13 +160,16 @@ class zUser {
 	public function validateToken($username, $token) {
 		global $table_prefix;
 		$username = strtolower(trim($username));
+		$ip = get_ip();
 		try {
-			$sth = $this->dbh->prepare ( "SELECT count(*) FROM {$table_prefix}users_token WHERE `username` = :username and token = :token and ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 100" );
+			$sth = $this->dbh->prepare ( "SELECT count(*) FROM {$table_prefix}users_token WHERE `username` = :username and token = :token and `ip` = :ip and ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 100" );
 			$sth->bindParam ( ':username', $username );
 			$sth->bindParam ( ':token', $token );
+			$sth->bindParam ( ':ip', $ip);
 			$sth->execute ();
 			$row = $sth->fetch ();
 			if ($row [0] > 0) {
+				$this->updateToken($username, $token);
 				return TRUE;
 			} else {
 				return FALSE;
@@ -180,10 +183,12 @@ class zUser {
 		global $table_prefix;
 		$username = strtolower(trim($username));
 		$time = get_time();
+		$ip = get_ip();
 		try {
-			$sth = $this->dbh->prepare ( "INSERT INTO {$table_prefix}users_token(`username`,`token`,`expired_time`) VALUES( :username, :token, :time)" );
+			$sth = $this->dbh->prepare ( "INSERT INTO {$table_prefix}users_token(`username`,`token`,`ip`,`expired_time`) VALUES( :username, :token, :ip, :time)" );
 			$sth->bindParam ( ':username', $username);
 			$sth->bindParam ( ':token', $token);
+			$sth->bindParam ( ':ip', $ip);
 			$sth->bindParam ( ':time', $time);
 			$sth->execute ();
 			if (! ($sth->rowCount () > 0)) {
@@ -195,7 +200,7 @@ class zUser {
 		}
 	}
 	
-	public function updateToken($username, $token) {
+	private function updateToken($username, $token) {
 		global $table_prefix;
 		$username = strtolower(trim($username));
 		$time = get_time();
