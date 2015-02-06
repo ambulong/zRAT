@@ -94,7 +94,7 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
  
 ###后台设计
  * /api?action=xxx
-  * login(POST)登录: username, password 登录成功status=1，并获取token。{status:0, token:xxx}
+  * login(POST)登录: username, password 登录成功status=1，并获取token。{"status":0,"data":{"token":""}}
   * logout(POST)注销: token
   * chgPassword(POST): token, password, newPassword
   * gethosts(POST)获取主机列表: token, offset, rows
