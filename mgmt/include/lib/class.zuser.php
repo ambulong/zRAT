@@ -213,6 +213,25 @@ class zUser {
 		}
 	}
 	
+	public function delToken($username, $token) {
+		global $table_prefix;
+		$username = strtolower(trim($username));
+		try {
+			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE `username` = :username and `token` = :token " );
+			$sth->bindParam ( ':username', $username);
+			$sth->bindParam ( ':token', $token);
+			$sth->execute ();
+			$row = $sth->rowCount ();
+			if ($row > 0) {
+				return $row;
+			} else {
+				return FALSE;
+			}
+		} catch ( PDOExecption $e ) {
+			echo "<br>Error: " . $e->getMessage ();
+		}
+	}
+	
 	/**
 	 * 清除过期token
 	 *
