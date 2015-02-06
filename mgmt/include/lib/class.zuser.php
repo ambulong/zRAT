@@ -162,7 +162,7 @@ class zUser {
 		$username = strtolower(trim($username));
 		$ip = get_ip();
 		try {
-			$sth = $this->dbh->prepare ( "SELECT count(*) FROM {$table_prefix}users_token WHERE `username` = :username and token = :token and `ip` = :ip and ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 100" );
+			$sth = $this->dbh->prepare ( "SELECT count(*) FROM {$table_prefix}users_token WHERE `username` = :username and `token` = :token and `ip` = :ip" );
 			$sth->bindParam ( ':username', $username );
 			$sth->bindParam ( ':token', $token );
 			$sth->bindParam ( ':ip', $ip);
@@ -205,10 +205,10 @@ class zUser {
 		$username = strtolower(trim($username));
 		$time = get_time();
 		try {
-			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}users_token SET `time` = :time WHERE `username` = :username and `token` = :token" );
+			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}users_token SET `expired_time` = :time WHERE `username` = :username and `token` = :token" );
+			$sth->bindParam ( ':time', $time);
 			$sth->bindParam ( ':username', $username);
 			$sth->bindParam ( ':token', $token);
-			$sth->bindParam ( ':time', $time);
 			$sth->execute ();
 			if (! ($sth->rowCount () > 0)) {
 				return FALSE;
@@ -246,7 +246,7 @@ class zUser {
 	public function refreshToken() {
 		global $table_prefix;
 		try {
-			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 100 " );
+			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 1000 " );
 			$sth->execute ();
 			$row = $sth->rowCount ();
 			if ($row > 0) {
