@@ -246,7 +246,7 @@ class zUser {
 	public function refreshToken() {
 		global $table_prefix;
 		try {
-			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 1000 " );
+			$sth = $this->dbh->prepare ( "DELETE FROM {$table_prefix}users_token WHERE ABS(UNIX_TIMESTAMP(now()) - UNIX_TIMESTAMP(`expired_time`)) > 780 " );
 			$sth->execute ();
 			$row = $sth->rowCount ();
 			if ($row > 0) {
