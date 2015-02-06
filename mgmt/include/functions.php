@@ -128,4 +128,5 @@ function resp($status, $data = array()){
 			"data"	=> $data
 	);
 	echo json_encode($resp);
+	exit;
 }

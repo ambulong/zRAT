@@ -126,6 +126,7 @@ function resp($status, $id = "", $command = "", $data = ""){
 			"data"	=> "{$data}"
 	);
 	echo json_encode($resp);
+	exit;
 }
 
 function getTimestamp() {
