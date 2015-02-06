@@ -95,14 +95,14 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
 ###后台设计
  * /api?action=xxx
   * login(POST)登录: username, password 登录成功status=1，并获取token。{"status":0,"data":{"token":""}}
-  * logout(POST)注销: token
-  * chgPassword(POST): token, password, newPassword
-  * gethosts(POST)获取主机列表: token, offset, rows
-  * gethost(POST)获取主机信息： token, id
-  * updateHost(POST)更新主机标签: token, id, label
-  * getCommands(POST)获取命令列表: token, offset, rows[, hid][, status]
-  * addCommand(POST)添加命令: token, hid, command, data, timestamp
-  * getResp(POST)获取命令执行结果: token, cid
+  * logout(POST)注销: username, token
+  * chgPassword(POST): username, token, password, newPassword
+  * gethosts(POST)获取主机列表: username, token, offset, rows
+  * gethost(POST)获取主机信息： username, token, id
+  * updateHost(POST)更新主机标签: username, token, id, label
+  * getCommands(POST)获取命令列表: username, token, offset, rows[, hid][, status]
+  * addCommand(POST)添加命令: username, token, hid, command, data, timestamp
+  * getResp(POST)获取命令执行结果: username, token, cid
  
  
 ##License
