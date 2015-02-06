@@ -20,7 +20,7 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
 ###上线步骤
 * *注：除了sid还有key，其它内容全部用第一步的key加密*
 * **注册：**客户端请求`/auth?sid=xxx&key=xxx&data=xxx`(POST)。(sid为客户端生成的100～200位的随机字符串来当客户端的ID[如果sid已经存在则使用旧的sid]，key(200位)用来AES加密后面的通信内容[key每次上线都更新]。如果返回status=0则重新生成sid和key，重复此步骤，直至status=1)
-* **获取命令：**客户端每3分钟请求一次`/hook?sid=xxx`(POST)。(如果404则返回第一部重新注册，如果不为空则AES解密[解密不了则返回第一步重新注册]，解析内容并执行对应命令。如果有命令执行则到下一步)(如果获取到命令则切换到每10秒请求一次，连续10次没有命令的话则切换回3分钟请求一次)
+* **获取命令：**客户端每3分钟请求一次`/hook?sid=xxx`(POST)。(如果404则返回第一步重新注册，如果不为空则AES解密[解密不了则返回第一步重新注册]，解析内容并执行对应命令。如果有命令执行则到下一步)(如果获取到命令则切换到每10秒请求一次，连续10次没有命令的话则切换回3分钟请求一次)
 * **发送命令执行结果：**客户端请求`resp?sid=xxx&cid=xxx`(POST)。(内容AES加密，并根据协议发送命令执行结果。如果返回404则重新注册)
 
 ###上线的管理端处理
@@ -101,7 +101,7 @@ zRAT是一个统一的主机在线管理应用，管理端使用PHP编写，只�
   * gethost(POST)获取主机信息： token, id
   * updateHost(POST)更新主机标签: token, id, label
   * getCommands(POST)获取命令列表: token, offset, rows[, hid][, status]
-  * addCommand(POST)添加命令: token, hid, command, timestamp
+  * addCommand(POST)添加命令: token, hid, command, data, timestamp
   * getResp(POST)获取命令执行结果: token, cid
  
  

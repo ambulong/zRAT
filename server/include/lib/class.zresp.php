@@ -17,7 +17,6 @@ class zResp {
 			$cid = isset($_POST['id'])?$_POST['id']:0;	//command's sid
 			$ciid = $command_obj->getID($cid);	//command's id
 			if(!$command_obj->isExistSID($cid)){
-				resp(0);
 				exit();
 			}
 			$status = isset($_POST['status'])?$_POST['status']:"";
