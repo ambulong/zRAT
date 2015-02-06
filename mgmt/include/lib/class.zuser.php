@@ -10,6 +10,7 @@ class zUser {
 	public function __construct() {
 		$this->dbh = $GLOBALS ['z_dbh'];
 		$this->hasher = new PasswordHash ( 8, FALSE );
+		$this->refreshToken();
 	}
 	
 	
