@@ -4,14 +4,22 @@ if (! defined ( "Z_ENTRANCE" )) {
 	exit ();
 }
 
+$user = new zUser();
+
+if(isset($_REQUEST["hashpassword"])) {
+	
+	resp(0, array(
+		"password"	=> $_REQUEST["hashpassword"],
+		"hash"	=> $user->hash($_REQUEST["hashpassword"])
+	));
+}
+
 $username = isset ( $_POST ['username'] ) ? trim($_POST ['username']) : "";
 $password = isset ( $_POST ['password'] ) ? trim($_POST ['password']) : "";
 
 if($username == "" || $password == "") {
 	resp(0, array("token" => ""));
 }
-
-$user = new zUser();
 
 if (!$user->validatePassword($username, $password)) {
 	resp(0, array("token" => ""));

@@ -17,15 +17,15 @@ class zUser {
 	 * 校验密码
 	 * 
 	 * @param string $username       	
-	 * @param string $password        	
+	 * @param string $password
 	 * @return boolean
 	 */
 	public function validatePassword($username, $password) {
 		$username = strtolower(trim ( $username ));
 		$hash = $this->getPassword ( $username );
 		//var_dump($hash);
-		if (! $this->isExistUser ( $username ))
-			return FALSE;
+		//var_dump($this->hasher->CheckPassword ( $password, $hash ));
+		//var_dump($password);
 		if ($this->hasher->CheckPassword ( $password, $hash ))
 			return TRUE;
 		else
@@ -75,15 +75,20 @@ class zUser {
 		}
 	}
 	
-	public function updatePassword($username, $passowrd) {
+	public function updatePassword($username, $password) {
 		global $table_prefix;
 		$hash = $this->hasher->HashPassword ( $password );
 		$username = strtolower(trim($username));
 		$mgmt_time = get_time ();
-		if (! $this->isExistID ( $id )) {
+		if (! $this->isExistUser($username)) {
 			return FALSE;
 		}
 		try {
+			(new zLog())->add(array(
+					"username"	=> $username,
+					"action"	=> "update password",
+					"user_info"	=> get_user_info()
+			));
 			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}users SET `password`= :password, `mgmt_time` = :mgmt_time WHERE `username` = :username" );
 			$sth->bindParam ( ':password', $hash );
 			$sth->bindParam ( ':mgmt_time', $mgmt_time );
@@ -107,7 +112,7 @@ class zUser {
 	 * 用户登录
 	 *
 	 * @param String $username 用户名
-	 *        	
+	 * 
 	 * @return string token
 	 */
 	public function login($username) {
@@ -117,6 +122,7 @@ class zUser {
 		$this->newToken($username, $token);
 		(new zLog())->add(array(
 				"username"	=> $username,
+				"action"	=> "login",
 				"user_info"	=> get_user_info()
 		));
 		return $token;
