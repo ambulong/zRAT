@@ -75,6 +75,34 @@ class zUser {
 		}
 	}
 	
+	public function updatePassword($username, $passowrd) {
+		global $table_prefix;
+		$hash = $this->hasher->HashPassword ( $password );
+		$username = strtolower(trim($username));
+		$mgmt_time = get_time ();
+		if (! $this->isExistID ( $id )) {
+			return FALSE;
+		}
+		try {
+			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}users SET `password`= :password, `mgmt_time` = :mgmt_time WHERE `username` = :username" );
+			$sth->bindParam ( ':password', $hash );
+			$sth->bindParam ( ':mgmt_time', $mgmt_time );
+			$sth->bindParam ( ':username', $username );
+			$sth->execute ();
+			if (! ($sth->rowCount () > 0))
+				return FALSE;
+			else
+				return TRUE;
+		} catch ( PDOExecption $e ) {
+			echo "<br>Error: " . $e->getMessage ();
+		}
+	}
+	
+	public function hash($password) {
+		$hash = $this->hasher->HashPassword ( $password );
+		return $hash;
+	}
+	
 	/**
 	 * 用户登录
 	 *
