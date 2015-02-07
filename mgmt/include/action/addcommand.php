@@ -14,7 +14,7 @@ $command = isset ( $_POST ['command'] ) ? trim ( $_POST ['command'] ) : "";
 $data = isset ( $_POST ['data'] ) ? trim ( $_POST ['data'] ) : "";
 $timestamp = isset ( $_POST ['timestamp'] ) ? trim ( $_POST ['timestamp'] ) : "";
 
-if ($username == "" || $token == "") {
+if ($username == "" || $token == "" || $hid == 0) {
 	resp ( 0, "" );
 }
 
