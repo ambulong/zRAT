@@ -24,4 +24,4 @@ class zHosts {
 			echo "<br>Error: " . $e->getMessage ();
 		}
 	}
-	}
+}
