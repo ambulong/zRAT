@@ -17,7 +17,7 @@ class zUser {
 	/**
 	 * 校验密码
 	 * 
-	 * @param string $username       	
+	 * @param string $username
 	 * @param string $password
 	 * @return boolean
 	 */

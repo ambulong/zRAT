@@ -3,7 +3,7 @@
  * 主机列表操作
  * 
  */
-class zHost {
+class zHosts {
 	
 	private $dbh = NULL;
 	
