@@ -45,4 +45,29 @@ class zHost {
 			echo "<br>Error: " . $e->getMessage ();
 		}
 	}
+	
+	public function updateLabel($label, $id) {
+		global $table_prefix;
+		$label = trim($label);
+		$id = intval($id);
+		$mgmt_time = get_time ();
+		if (! $this->isExistID($id)) {
+			return FALSE;
+		}
+		try {
+			$sth = $this->dbh->prepare ( "UPDATE {$table_prefix}hosts SET `label`= :label, `mgmt_time` = :mgmt_time WHERE `id` = :id" );
+			$sth->bindParam ( ':label', $label );
+			$sth->bindParam ( ':mgmt_time', $mgmt_time );
+			$sth->bindParam ( ':id', $id );
+			$sth->execute ();
+			if (! ($sth->rowCount () > 0))
+				return FALSE;
+			else {
+				$this->delUserToken($username);
+				return TRUE;
+			}
+		} catch ( PDOExecption $e ) {
+			echo "<br>Error: " . $e->getMessage ();
+		}
+	}
 }
