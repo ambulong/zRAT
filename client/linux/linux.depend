@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1423398292 source:/var/www/html/zRAT/client/linux/main.cpp
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<cstdio>
+	<unistd.h>
+

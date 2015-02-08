@@ -29,7 +29,8 @@ class zAuth {
 			$pub_ip =  get_ip();
 			$data = isset($_POST['data'])?$_POST['data']:"";
 			$data = decryptAES($data, $this->key);
-			$data = json_decode($data, true);
+			if(is_json($data))
+				$data = json_decode($data, true);
 			
 			if((new zHost())->add($this->sid, $this->key, $pub_ip, $data["ip"],  $data["username"],  $data["hostname"],  $data["os"]))
 				resp(1);
