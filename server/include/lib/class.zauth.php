@@ -14,6 +14,8 @@ class zAuth {
 	public function init(){
 		$sid = $this->sid;
 		$host_obj = new zHost();
+		//var_dump($_REQUEST);
+		//var_dump($host_obj->isExistSID($sid));
 		if(!$this->validateSID($sid) || !$this->validateKey($this->key)){
 			resp(0);
 		}elseif($host_obj->isExistSID($sid)){
@@ -31,7 +33,7 @@ class zAuth {
 			$data = decryptAES($data, $this->key);
 			if(is_json($data))
 				$data = json_decode($data, true);
-			
+			//var_dump($data);
 			if((new zHost())->add($this->sid, $this->key, $pub_ip, $data["ip"],  $data["username"],  $data["hostname"],  $data["os"]))
 				resp(1);
 			else 
@@ -43,8 +45,9 @@ class zAuth {
 		$host_obj = new zHost();
 		if($sid == "")
 			return false;
-		if(!preg_match('/^[A-Za-z0-9]{100,200}$/i', $sid))
+		if(!preg_match('/^[A-Za-z0-9]{100,200}$/i', $sid)) {
 			return false;
+		}
 		if(strlen($sid) < 100 || strlen($sid) > 200)
 			return false;
 		return true;
